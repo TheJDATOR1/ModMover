@@ -41,20 +41,20 @@ public class MainWindowViewModel : ViewModelBase
         var config = new ConfigurationBuilder()
             .AddUserSecrets<MainWindowViewModel>()
             .Build();
-
+        
         ModsFolder = config["ModsFolder"];
         BackupModsFolder = config["BackupModsFolder"];
         TrayFolder = config["TrayFolder"];
-
+        
         var files = Directory.GetFiles(DownloadsFolder).ToList();
-
+        
         FileCountInDownloads = files.Count(x => x.Contains("desktop.ini") == false);
-
+        
         var modFiles = Directory.GetFiles(ModsFolder).ToList();
         var trayFiles = Directory.GetFiles(TrayFolder).ToList();
-
+        
         ModCount = modFiles.Count + trayFiles.Count;
-
+        
         InitialiseDownloadWatcher();
         InitialiseModsAndTrayWatchers();
     }
@@ -147,6 +147,10 @@ public class MainWindowViewModel : ViewModelBase
             }
             catch(Exception e)
             {
+
+            }
+            finally
+            {
                 File.Delete(zippedFolder);
             }
         }
@@ -167,6 +171,10 @@ public class MainWindowViewModel : ViewModelBase
                 }
             }
             catch(Exception e)
+            {
+                
+            }
+            finally
             {
                 rarFolder.Dispose();
 
